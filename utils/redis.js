@@ -1,6 +1,12 @@
 const redis = require('redis');
 
+/**
+ * Represents a Redis client for interacting with a Redis Server
+ */
 class RedisClient {
+  /**
+   * Creates an Instance of RedisClient
+   */
   constructor() {
     this.client = redis.createClient();
     this.alive = true;
@@ -15,13 +21,20 @@ class RedisClient {
       });
   }
 
-  // returns true when the connection to Redis is a success otherwise, false
+  /**
+   * Checks if the connection to Redis is a success
+   * @returns {boolean} true when the connection to Redis is a success otherwise, false
+   */
   isAlive() {
     return this.alive;
   }
 
-  //  asynchronous function `get` that takes a string key as argument and\
-  // returns the Redis value stored for this key
+  /**
+   * Retrieves the value stored in Redis for the specified key
+   * @param {string} key - The key to retrieve the value for
+   * @returns {Promise<any>} A promise that resolves with the value stored for the key\
+   * or rejects with an error if an error occurs
+   */
   async get(key) {
     return new Promise((resolve, reject) => {
       this.client.get(key, (err, reply) => {
@@ -34,8 +47,14 @@ class RedisClient {
     });
   }
 
-  // asynchronous function `set` that takes a string key, a value and a duration
-  // in second as arguments to store it in Redis (with an expiration set by the duration argument)
+  /**
+   * Stores a value in Redis with an expiration set by the duration argument.
+   * @param {string} key - The key under which to store the value.
+   * @param {any} value - The value to store.
+   * @param {number} duration - The duration in seconds for which to store the value.
+   * @returns {Promise<string>} A promise that resolves with the result of the SETEX command,\
+   * or rejects with an error if an error occurs.
+   */
   async set(key, value, duration) {
     return new Promise((resolve, reject) => {
       this.client.setex(key, duration, value, (err, reply) => {
@@ -48,8 +67,12 @@ class RedisClient {
     });
   }
 
-  // asynchronous function del that takes a string key as argument and\
-  // remove the value in Redis for this key
+  /**
+   * Removes the value in Redis for the specified key.
+   * @param {string} key - The key for which to remove the value.
+   * @returns {Promise<number>} A promise that resolves with the number of keys that were removed,\
+   * or rejects with an error if an error occurs.
+   */
   async del(key) {
     return new Promise((resolve, reject) => {
       this.client.del(key, (err, reply) => {
