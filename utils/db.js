@@ -1,5 +1,5 @@
 import mongodb from 'mongodb';
-// import Collection from 'mongodb/lib/collection';
+//  import Collection from 'mongodb/lib/collection';
 
 /**
  * Module with a class that creates a client to MongoDB
@@ -45,6 +45,22 @@ class DBClient {
    */
   async nbFiles() {
     return this.client.db().collection('files').countDocuments();
+  }
+
+  /**
+   * returns all documents in the collection users
+   * @returns {Promise<Collection>}
+   */
+  async userCollections() {
+    return this.client.db().collection('users');
+  }
+
+  /**
+   * returns all documents in the collection files
+   * @returns {Promise<Collection>}
+   */
+  async fileCollections() {
+    return this.client.db().collection('files');
   }
 }
 
