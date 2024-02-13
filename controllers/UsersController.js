@@ -1,6 +1,8 @@
 import sha1 from 'sha1';
+import Queue from 'bull/lib/queue';
 import dbClient from '../utils/db';
 
+const queue = new Queue('sending email');
 export default class UsersController {
   static async postNew(request, response) {
     const { email, password } = request.body ? request.body : null;
@@ -25,6 +27,8 @@ export default class UsersController {
       .insertOne({ email, password: sha1(password) });
 
     const userId = createdUser.insertedId.toString();
+    queue.add({ userId });
+
     response.status(201).json({ userId, email });
   }
 }
