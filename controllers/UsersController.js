@@ -1,10 +1,9 @@
 import sha1 from 'sha1';
 import dbClient from '../utils/db';
 
-class UsersController {
+export default class UsersController {
   static async postNew(request, response) {
-    const email = request.body ? request.body.email : null;
-    const password = request.body ? request.body.password : null;
+    const { email, password } = request.body ? request.body : null;
 
     if (!email) {
       response.status(400).json({ error: 'Missing email' });
@@ -29,6 +28,3 @@ class UsersController {
     response.status(201).json({ userId, email });
   }
 }
-
-export default UsersController;
-module.exports = UsersController;

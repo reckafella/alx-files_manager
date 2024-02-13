@@ -4,7 +4,7 @@ import redisClient from '../utils/redis';
 /**
  * Creates handlers /status and /stats endpoints
  */
-class AppController {
+export default class AppController {
   static getHome(request, response) {
     response.status(200).send('Hello, World!');
   }
@@ -22,6 +22,3 @@ class AppController {
       });
   }
 }
-
-export default AppController;
-module.exports = AppController;
