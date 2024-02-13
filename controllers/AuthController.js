@@ -40,7 +40,7 @@ export default class AuthController {
     const duration = 24 * 60 * 60;
     const userId = user._id.toString();
 
-    await redisClient.set(`token_${accessToken}`, userId, duration);
+    await redisClient.set(`auth_${accessToken}`, userId, duration);
 
     response.status(200).json({ accessToken });
   }
@@ -53,7 +53,7 @@ export default class AuthController {
       return;
     }
 
-    const userId = await redisClient.get(`token_${token}`);
+    const userId = await redisClient.get(`auth_${token}`);
 
     if (!userId) {
       response.status(401).json({ error: 'Unauthorized' });
@@ -67,7 +67,7 @@ export default class AuthController {
       return;
     }
 
-    await redisClient.del(`token_${token}`);
+    await redisClient.del(`auth_${token}`);
 
     response.status(204).send();
   }
