@@ -25,7 +25,7 @@ class UsersController {
       .insertOne({ email, password: sha1(password) });
 
     const userId = createdUser.insertedId.toString();
-    response.status(201).json({ email, userId });
+    response.status(201).json({ userId, email });
   }
 }
 
