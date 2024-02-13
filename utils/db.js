@@ -1,5 +1,4 @@
 import mongodb from 'mongodb';
-//  import Collection from 'mongodb/lib/collection';
 
 /**
  * Module with a class that creates a client to MongoDB
